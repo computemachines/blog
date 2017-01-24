@@ -1,7 +1,7 @@
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash, Markup
 from flask_pymongo import PyMongo
-from docutils.core import publish_parts
+from util import rst2html
 
 app = Flask(__name__)
 mongo = PyMongo(app)
@@ -17,7 +17,7 @@ app.config.from_envvar('APP_SETTINGS', silent=True)
 def show_last_post():
     return render_template('show_post.html', post_id=0)
 
-@app.route('/post/new/<int:post_id>')
+@app.route('/post/new')
 def new_post(post_id):
     mongo.db.posts.insert({'_id': post_id, 'content': 'hello worlds' })
     return redirect(url_for('show_post', post_id=post_id))
@@ -25,9 +25,14 @@ def new_post(post_id):
 @app.route('/post/<int:post_id>')
 def show_post(post_id):
     post = mongo.db.posts.find_one_or_404({'_id': post_id})
-    post_content_html = publish_parts(post['content'], writer_name='html',
-                                      settings_overrides={"math_output":"MathJax"})['html_body']
+    post_content_html = rst2html(post['content'])
     return render_template('show_post.html', post_content_html=Markup(post_content_html))
+
+@app.route('/post/')
+def show_posts():
+    posts = mongo.db.posts.find()
+    return render_template('show_posts.html',
+                           posts=[rst2html(post['content']) for post in posts])
 
 @app.route('/projects/')
 def list_projects():
@@ -36,7 +41,7 @@ def list_projects():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        pass
+        return
     else:
         return render_template('login.html')
 

@@ -1,1 +1,3 @@
-$("h2").html("Hello")
+$(function() {
+    console.log("hello worlds");
+})

@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container">
+  <ul>
+    {% for post in posts %}
+    <li>{{ post|safe }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}
