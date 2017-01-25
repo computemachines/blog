@@ -15,6 +15,7 @@ app.config.from_envvar('APP_SETTINGS', silent=True)
 
 @app.route('/')
 def show_last_post():
+    return redirect(url_for('login'))
     return render_template('show_post.html', post_id=0)
 
 @app.route('/post/new')

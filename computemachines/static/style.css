@@ -2,8 +2,9 @@
     font-size: 1.3em;
 }
 
-header {
+#mast-head  {
     max-width: 600px;
+    text-align: center;
 }
 
 .form-group {
@@ -13,8 +14,8 @@ header {
 .form-login {
     max-width:330px;
     padding: 15px;
-    margin: 0 auto;
-}
+    margin: 0 auto;}
+
 
 .form-login .form-login-heading {
     margin-bottom: 10px;
@@ -24,25 +25,19 @@ header {
     position: relative;
     height: auto;
     box-sizing: border-box;
-}
-
-.form-login .form-control {
-    position: relative;
-    height: auto;
     -webkit-box-sizing: border-box;
-    box-sizing: border-box;
     padding: 10px;
     font-size: 16px;
 }
 .form-login .form-control:focus {
     z-index: 2;
 }
-.form-login input[type="email"] {
+.form-login #inputUsername {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
-.form-login input[type="password"] {
+.form-login #inputPassword {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
