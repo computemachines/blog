@@ -1,0 +1,51 @@
+==========================================
+ Gradient Distortion for GLSL Textures
+==========================================
+
+.. raw:: html
+
+    <code class="vert-shader common-shader">
+        attribute vec4 a_vec4_combined;
+        varying vec2 v_vec2_texCoords;
+        void main() {
+            v_vec2_texCoords = a_vec4_combined.zw;
+            gl_Position = vec4(a_vec4_combined.xy, 0, 1);
+        }
+    </code>
+    <code class="frag-shader common-shader">
+        #extension GL_OES_standard_derivatives : enable
+        precision mediump float;
+        uniform vec2 u_vec2_mouse;
+        varying vec2 v_vec2_texCoords;
+        vec4 original_image(vec2 texCoords) {
+            return vec4(vec3(
+                mod(floor(texCoords.x*10.0)+floor(texCoords.y*10.0), 2.0)
+            ), 1);
+        }
+        float distortion_potential(vec2);
+        void main() {
+            //gl_FragColor = original_image(v_vec2_texCoords);
+            float potential = distortion_potential(v_vec2_texCoords);
+            vec2 distortion = vec2(dFdx(potential), dFdy(potential));
+            gl_FragColor = vec4(
+              vec3(original_image(v_vec2_texCoords + distortion)), 1);
+       }
+
+    </code>
+
+The distortion vector field is the gradient of a scalar field. This distortion can only move, scale and shear small patches of the image. It can't rotate patches of the image. Use this distortion in combination with the curl distortion for more general effects.
+
+The spec for OES_standard_derivatives doesn't demand that implementations be accurate. Jaggies and other artifacts are expected.
+
+.. raw:: html
+
+    <div class="gl-ide">
+        <canvas class="gl-canvas">Can not display canvas</canvas>
+        <pre><code class="frag-shader">float distortion_potential(vec2 texCoords) {
+        vec2 centeredCoords = texCoords - u_vec2_mouse;
+        return 5.*exp(-dot(centeredCoords, centeredCoords)/(2.0*0.2*0.2));
+    }
+    </code></pre>
+    </div>
+    <div class="clearfix"></div>
+
