@@ -2,9 +2,34 @@
     font-size: 1.3em;
 }
 
-#mast-head  {
+#blog-header  {
     max-width: 600px;
     text-align: center;
+}
+
+.blog-main {
+    max-width: 700px;
+    margin: 0 15px;
+}
+
+.common-shader {
+    display: none;
+}
+
+.gl-ide {
+    margin: 15px;
+}
+
+.gl-ide canvas.gl-canvas {
+    float: left;
+    width: 200px;
+    height: 200px;
+    margin-right: 15px;
+}
+
+.gl-ide pre {
+    margin: 0 15px;
+    height: 200px;
 }
 
 .form-group {
