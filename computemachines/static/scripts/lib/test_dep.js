@@ -1,0 +1,1 @@
+var TestLib = $("title").text();

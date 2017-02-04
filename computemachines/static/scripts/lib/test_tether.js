@@ -1,0 +1,3 @@
+define(['tether'], function (tether) {
+
+});

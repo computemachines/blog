@@ -17,20 +17,33 @@
 }
 
 .gl-ide {
-    margin: 15px;
+    margin: 15px 0;
+    height: 265px;
 }
 
 .gl-ide canvas.gl-canvas {
-    float: left;
+    position: absolute;
+    box-sizing: content-box;
     width: 200px;
     height: 200px;
-    margin-right: 15px;
+    padding-bottom: 65px;
+    /* image should have 5px 'margin' while fitting into padding-bottom */
+    background-image: url(/static/images/plus_gradient_f_operator.svg);
+    background-position: bottom 5px center;
+    background-repeat: no-repeat;
+    background-size: 55px auto;
 }
 
 .gl-ide pre {
-    margin: 0 15px;
-    height: 200px;
+    box-sizing: border-box;
+    max-width: 100%;
+    position: absolute;
+    max-height: 265px;
+    margin-left: 215px;
+    margin-right: 15px;
 }
+
+// ­­­­ Login styles
 
 .form-group {
     margin-bottom: 0px;

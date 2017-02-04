@@ -1,5 +1,5 @@
 ==========================================
- Gradient Distortion for GLSL Textures
+ Gradient Distort for GLSL Textures
 ==========================================
 
 .. raw:: html
@@ -22,14 +22,7 @@
                 mod(floor(texCoords.x*10.0)+floor(texCoords.y*10.0), 2.0)
             ), 1);
         }
-        float distortion_potential(vec2);
-        void main() {
-            //gl_FragColor = original_image(v_vec2_texCoords);
-            float potential = distortion_potential(v_vec2_texCoords);
-            vec2 distortion = vec2(dFdx(potential), dFdy(potential));
-            gl_FragColor = vec4(
-              vec3(original_image(v_vec2_texCoords + distortion)), 1);
-       }
+
 
     </code>
 
@@ -41,11 +34,26 @@ The spec for OES_standard_derivatives doesn't demand that implementations be acc
 
     <div class="gl-ide">
         <canvas class="gl-canvas">Can not display canvas</canvas>
-        <pre><code class="frag-shader">float distortion_potential(vec2 texCoords) {
-        vec2 centeredCoords = texCoords - u_vec2_mouse;
-        return 5.*exp(-dot(centeredCoords, centeredCoords)/(2.0*0.2*0.2));
+        <pre><code class="frag-shader glsl">void main() {
+        gl_FragColor.rgb = vec3(original_image(v_vec2_texCoords));
+        gl_FragColor.a = 1.;
     }
     </code></pre>
     </div>
-    <div class="clearfix"></div>
+
+.. raw:: html
+
+    <div class="gl-ide">
+        <canvas class="gl-canvas">Can not display canvas</canvas>
+        <pre><code class="frag-shader glsl">float distortion_potential(vec2 texCoords) {
+        vec2 centeredCoords = texCoords - u_vec2_mouse;
+        return exp(-dot(centeredCoords, centeredCoords)/(2.0*0.2*0.2));
+    }
+    void main() {
+        float potential = distortion_potential(v_vec2_texCoords);
+        gl_FragColor.rgb = vec3(potential);
+        gl_FragColor.a = 1.;
+    }
+    </code></pre>
+    </div>
 
