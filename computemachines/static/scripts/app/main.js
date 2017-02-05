@@ -1,4 +1,4 @@
-define(["jquery", "hljs"], function ($, highlight) {
-        console.log("highlighting");
-        //highlight.initHighlighting();
+define(["jquery", "codeflask"], function ($, CodeFlask) {
+    var flask = new CodeFlask;
+    flask.runAll('.gl-editor', {language: "glsl"});
 });

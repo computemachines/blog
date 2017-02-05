@@ -4,6 +4,7 @@ from flask_pymongo import PyMongo
 from util import rst2html
 
 app = Flask(__name__)
+app.jinja_env.globals.update(rst2html=rst2html)
 mongo = PyMongo(app)
 
 app.config.from_object(__name__)
@@ -26,8 +27,7 @@ def new_post(post_id):
 @app.route('/post/<int:post_id>')
 def show_post(post_id):
     post = mongo.db.posts.find_one_or_404({'_id': post_id})
-    post_content_html = rst2html(post['content'])
-    return render_template('show_post.html', post_content_html=Markup(post_content_html))
+    return render_template('show_post.html', post=post)
 
 @app.route('/post/')
 def show_posts():

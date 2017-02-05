@@ -1,3 +1,0 @@
-define(['tether'], function (tether) {
-
-});

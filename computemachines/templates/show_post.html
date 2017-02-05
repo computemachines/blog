@@ -1,9 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
 
-  <div class="blog-main">
-    {{ post_content_html }}
-  </div>
+
+<div class="blog-main">
+  <h2 class="blog-post-title">{{ post['title'] }}</h2>
+  <p class="blog-post-meta">{{ post['pub_date'] }}</p>
+  {% if post['format']=='.rst' %}
+  {{ rst2html(post["content"])|safe }}
+  {% endif %}
+</div>
   <!-- <div class="col-sm-3 col-sm-offset-1 blog-sidebar"> -->
     <!-- <section id="blog-about" class="hidden-xs"> -->
     <!--   <h4>About</h4> -->
@@ -16,6 +21,5 @@
     <!--   </ul> -->
     <!-- </section> -->
   <!-- </div> -->
-
 
 {% endblock %}

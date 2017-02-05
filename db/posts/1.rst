@@ -1,7 +1,3 @@
-==========================================
- Gradient Distort for GLSL Textures
-==========================================
-
 .. raw:: html
 
     <code class="vert-shader common-shader">
@@ -26,34 +22,48 @@
 
     </code>
 
-The distortion vector field is the gradient of a scalar field. This distortion can only move, scale and shear small patches of the image. It can't rotate patches of the image. Use this distortion in combination with the curl distortion for more general effects.
-
-The spec for OES_standard_derivatives doesn't demand that implementations be accurate. Jaggies and other artifacts are expected.
+The distortion vector field is computed from the gradient of a scalar "potential" field. This distortion can only move, scale and shear small patches of the image. It can not rotate patches of the image in-place or with translation; Swirl-like effects are impossible to achieve with this technique alone.
 
 .. raw:: html
 
-    <div class="gl-ide">
-        <canvas class="gl-canvas">Can not display canvas</canvas>
-        <pre><code class="frag-shader glsl">void main() {
-        gl_FragColor.rgb = vec3(original_image(v_vec2_texCoords));
-        gl_FragColor.a = 1.;
-    }
-    </code></pre>
-    </div>
+         <div class="gl-ide gl-operand">
+         <canvas class="gl-canvas"></canvas>
+         <div class="gl-editor" data-language="glsl">
+        #extension GL_OES_standard_derivatives : enable
+        precision mediump float;
+        uniform vec2 u_vec2_mouse;
+        varying vec2 v_vec2_texCoords;
+        vec4 original_image(vec2 texCoords) {
+            return vec4(vec3(
+                mod(floor(texCoords.x*10.0)+floor(texCoords.y*10.0), 2.0)
+            ), 1);
+        }
+         </div>
+         </div>
+
+         <div class="gl-ide gl-operator">
+         <canvas class="gl-canvas"></canvas>
+         <div class="gl-editor" data-language="glsl">
+         hello worlds...
+         </div>
+         </div>
+
+         <div class="gl-ide gl-composition">
+         <canvas class="gl-canvas"></canvas>
+         <div class="gl-editor" data-language="glsl">
+         hello worlds...
+         </div>
+         </div>
+
+
+This is also useful for approximating caustics in the paraxial limit (looking along the normal to a surface). Here are some examples of the distortion caused by the wavy surface of a pool of water.
 
 .. raw:: html
+         figure and code
 
-    <div class="gl-ide">
-        <canvas class="gl-canvas">Can not display canvas</canvas>
-        <pre><code class="frag-shader glsl">float distortion_potential(vec2 texCoords) {
-        vec2 centeredCoords = texCoords - u_vec2_mouse;
-        return exp(-dot(centeredCoords, centeredCoords)/(2.0*0.2*0.2));
-    }
-    void main() {
-        float potential = distortion_potential(v_vec2_texCoords);
-        gl_FragColor.rgb = vec3(potential);
-        gl_FragColor.a = 1.;
-    }
-    </code></pre>
-    </div>
+         The image as seen overhead above the surface.
 
+.. raw:: html
+         figure and code
+
+         Refracted light from a sun overhead as seen below the surface.
