@@ -4,14 +4,10 @@ from flask_pymongo import PyMongo
 from util import rst2html
 
 app = Flask(__name__)
-app.jinja_env.globals.update(rst2html=rst2html)
 mongo = PyMongo(app)
 
 app.config.from_object(__name__)
-
-app.config.update(dict(
-    USERNAME='admin'
-))
+app.jinja_env.globals.update(rst2html=rst2html)
 app.config.from_envvar('APP_SETTINGS', silent=True)
 
 @app.route('/')

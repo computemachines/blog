@@ -1,4 +1,3 @@
-define(["jquery", "codeflask"], function ($, CodeFlask) {
-    var flask = new CodeFlask;
-    flask.runAll('.gl-editor', {language: "glsl"});
+define(["jquery", "glutils"], function ($, GL) {
+    console.log(new GL($('.gl-ide canvas')[0]));
 });

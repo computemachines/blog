@@ -28,29 +28,32 @@
 
 .gl-ide {
     height: 265px;
+    padding-left: 215px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.gl-ide h3 {
+    position: absolute;
+    left: 15px;
+    font-size: 0.9em;
 }
 
-.gl-ide canvas.gl-canvas {
+canvas.gl-canvas {
     position: absolute;
+    left: 15px;
+    margin-top: 1em;
     box-sizing: content-box;
     width: 200px;
     height: 200px;
 }
-.gl-ide.gl-operand canvas.gl-canvas {
-    padding-bottom: 65px;
-    /* image should have 5px 'margin' while fitting into padding-bottom */
-    background-image: url(/static/images/plus_gradient_f_operator.svg);
-    background-position: bottom 5px center;
-    background-repeat: no-repeat;
-    background-size: 55px auto;
+
+.gl-editor {
+
+    /* margin seems to be erased by prism.js highlightAll */
+    /* margin: 15px 15px 15px 215px; */
+    max-height: 265px;
 }
 
-.gl-ide .gl-editor{
-    position: absolute;
-    overflow: visible;
-    height: 265px;
-    margin-left: 215px;
-}
 
  /* ­­­­ Login styles ---- */
 

@@ -19,39 +19,6 @@ $(function() {
         }
         var attributes = {};
         var uniforms = {};
-        if (!gl) {
-            console.log("could not acquire gl context");
-            return;
-        }
-
-        var glerror = function() {
-            var error = gl.getError();
-            switch (error) {
-            case gl.NO_ERROR:
-                return;
-                break;
-            case gl.INVALID_ENUM:
-                throw new Error("gl.INVALID_ENUM");
-                break;
-            case gl.INVALID_VALUE:
-                throw new Error("gl.INVALID_VALUE");
-                break;
-            case gl.INVALID_OPERATION:
-                throw new Error("gl.INVALID_OPERATION");
-                break;
-            case gl.INVALID_FRAMEBUFFER_OPERATION:
-                throw new Error("gl.INVALID_FRAMEBUFFER_OPERATION");
-                break;
-            case gl.OUT_OF_MEMORY:
-                throw new Error("gl.OUT_OF_MEMORY");
-                break;
-            case gl.CONTEXT_LOST_WEBGL:
-                throw new Error("gl.CONTEXT_LOST_WEBGL");
-                break;
-            default:
-                throw new Error("unspecified webgl error");
-            }
-        };
 
         var createShader = function(source, type) {
             //type = gl.VERTEX_SHADER;

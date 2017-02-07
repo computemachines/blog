@@ -1,1 +1,1 @@
-requirejs(['app/main']);
+requirejs(['prism', 'app/main']);
