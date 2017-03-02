@@ -15,7 +15,7 @@ app.jinja_env.globals.update(rst2html=rst2html)
 
 @app.route('/')
 def show_last_post():
-    return redirect_to(url_for('show_posts'))
+    return redirect(url_for('show_posts'))
 
 @app.route('/post/new')
 def new_post(post_id):
