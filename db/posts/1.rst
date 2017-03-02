@@ -18,7 +18,9 @@
                 mod(floor(texCoords.x*10.0)+floor(texCoords.y*10.0), 2.0)
             ), 1);
         }
-
+        float sq(float x) { reutrn
+        float distortion_potential(vec2 texCoords){
+            return exp(
 
     </code>
 
@@ -68,14 +70,7 @@ The distortion vector field is computed from the gradient of a scalar "potential
 
 
 You have two options for computing the distortion from the distortion potential. You can call dFdx and dFdy and get the gpu's best guess of the gradient, or you can analytically solve for the gradient ahead of time.
-This effect is also a useful approximation of caustics in the paraxial limit (looking along the normal to a the surface). Here are some examples of the distortion caused by the wavy surface of a swimming pool using the same code as the before.
 
-.. raw:: html
-         figure and code
+.. raw:: math
+         distortedImage(x, y) = image(x+\frac{\partial F}{\partial x}, y+\frac{\partial F}{\partial y}))
 
-         The image as seen overhead above the surface.
-
-.. raw:: html
-         figure and code
-
-         Refracted light from a sun overhead as seen below the surface.

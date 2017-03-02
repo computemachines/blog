@@ -7,13 +7,15 @@ app = Flask(__name__)
 mongo = PyMongo(app)
 
 app.config.from_object(__name__)
+# not currently used
+# app.config.from_envvar('APP_SETTINGS', silent=True)
+
+# expose rst2html function from jinja template
 app.jinja_env.globals.update(rst2html=rst2html)
-app.config.from_envvar('APP_SETTINGS', silent=True)
 
 @app.route('/')
 def show_last_post():
-    return redirect(url_for('login'))
-    return render_template('show_post.html', post_id=0)
+    return redirect_to(url_for('show_posts'))
 
 @app.route('/post/new')
 def new_post(post_id):
@@ -27,17 +29,19 @@ def show_post(post_id):
 
 @app.route('/post/')
 def show_posts():
+    # for now there is only one post, so renders identically to show_post
     posts = mongo.db.posts.find()
     return render_template('show_posts.html',
-                           posts=[rst2html(post['content']) for post in posts])
+                           posts=posts)
 
-@app.route('/projects/')
-def list_projects():
-    return render_template('projects.html')
+# @app.route('/projects/')
+# def list_projects():
+#     return render_template('projects.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
+        # TODO: process login form POST
         return
     else:
         return render_template('login.html')
