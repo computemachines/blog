@@ -4,6 +4,5 @@ EXPOSE 80 443
 
 RUN apk update && apk add nginx
 ADD nginx.conf /etc/nginx/nginx.conf
-RUN nginx -t
-CMD nginx -s reload
+CMD nginx -t && nginx -s reload
 
