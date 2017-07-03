@@ -2,8 +2,9 @@ FROM alpine
 
 RUN mkdir -pv /data/www/
 ADD hello.py /data/www/
-RUN apk update && apk add python py-pip uwsgi-python
-RUN pip install Flask
-ENV FLASK_APP=/data/www/hello.py
+ADD blogapp.ini /etc/uwsgi/conf.d/
+RUN apk update && apk add python3 uwsgi-python3
+RUN pip3 install Flask
 
-CMD cd /data/www/; uwsgi --plugin python -s 0.0.0.0:3031 --manage-script-name --mount /=hello:app
+CMD cd /data/www/; uwsgi --ini /etc/uwsgi/conf.d/blogapp.ini
+
