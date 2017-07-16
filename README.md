@@ -4,10 +4,46 @@
 openssl dhparam -out /etc/ssl/certs/dhparam.pem
 ```
 
+## Order of docker spin up
+1) uwsgi
+2) nginx
+3) webpack (terminates)
+
+
+
+## Docker state
+### Data Volumes
+Container | Volume
+------------------
+letsencrypt | /etc/letsencrypt/
+nginx | /etc/letsencrypt/ /etc/ssl/ /assets/
+webpack | /assets/
+uwsgi |
+redis |
+
+### Networking
+Container | Network | Exposed Bridged ports
+-------------------------------------------
+letsencrypt | | 80 443
+nginx | blog | 80 443
+webpack | |
+uwsgi | blog |
+redis | blog |
+
+
 * Letsencrypt certificate renewal
 ``` shell
 docker run -ti -p 80:80 -p 443:443 -v /etc/letsencrypt/:/etc/letsencrypt letsencrypt
+
+
+## webpack and nginx containers should share a volume.
+1) build static sources with webpack
+``` shell
+cd ~/blog/webpack; docker run -ti -v ../nginx/static/:/static/
 ```
+
+
+
 * NGINX production
 ``` shell
 docker run -tid -p 80:80 -p 443:443 -v /etc/letsencrypt/:/etc/letsencrypt -v /etc/ssl/:/etc/ssl/ --net=blog --name=nginx nginx nginx -g "daemon off;"
