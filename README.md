@@ -13,36 +13,39 @@ openssl dhparam -out /etc/ssl/certs/dhparam.pem
 
 ## Docker state
 ### Data Volumes
+
 Container | Volume
 ------------------
 letsencrypt | /etc/letsencrypt/
 nginx | /etc/letsencrypt/ /etc/ssl/ /assets/
 webpack | /assets/
-uwsgi |
-redis |
+uwsgi | -
+redis | -
 
 ### Networking
+
 Container | Network | Exposed Bridged ports
 -------------------------------------------
-letsencrypt | | 80 443
+letsencrypt |  | 80 443
 nginx | blog | 80 443
-webpack | |
-uwsgi | blog |
-redis | blog |
+webpack |  | 
+uwsgi | blog | 
+redis | blog | 
 
 
 * Letsencrypt certificate renewal
 ``` shell
 docker run -ti -p 80:80 -p 443:443 -v /etc/letsencrypt/:/etc/letsencrypt letsencrypt
 
-
-## webpack and nginx containers should share a volume.
-1) build static sources with webpack
-``` shell
-cd ~/blog/webpack; docker run -ti -v ../nginx/static/:/static/
+* uwsgi
+```shell
+docker run -tid --net blog --name uwsgi uwsgi
 ```
 
-
+* webpack
+``` shell
+docker run -ti --volumes-from nginx --name webpack webpack
+```
 
 * NGINX production
 ``` shell
