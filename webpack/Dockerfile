@@ -1,8 +1,8 @@
 FROM alpine
 
-RUN apk update && apk add nodejs
+RUN apk update && apk add nodejs nodejs-npm
 RUN mkdir -pv /webpack/
-ADD blog/ /webpack/
+ADD blog/ /webpack/blog/
 RUN cd /webpack/blog/; npm install
 VOLUME /assets
 
