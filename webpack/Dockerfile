@@ -22,4 +22,4 @@ RUN cd /webpack/blog/; \
     
 VOLUME /assets
 
-CMD webpack --config /webpack/blog/webpack.config.js
+CMD cd /webpack/blog; npm run build
