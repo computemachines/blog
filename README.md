@@ -38,11 +38,13 @@ openssl dhparam -out /etc/ssl/certs/dhparam.pem
 docker run -ti -p 80:80 -p 443:443 -v /etc/letsencrypt/:/etc/letsencrypt letsencrypt
 
 * uwsgi
-```shell
+``` shell
 docker run -tid --net blog --name uwsgi uwsgi
 ```
 
 * webpack
+This needs at least 512M. Add swap if failing.
+
 ``` shell
 docker run -ti --volumes-from nginx --name webpack webpack
 ```
