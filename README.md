@@ -14,23 +14,23 @@ openssl dhparam -out /etc/ssl/certs/dhparam.pem
 ## Docker state
 ### Data Volumes
 
-Container | Volume
-------------------
-letsencrypt | /etc/letsencrypt/
-nginx | /etc/letsencrypt/ /etc/ssl/ /assets/
-webpack | /assets/
-uwsgi | -
-redis | -
+| Container | Volume |
+|-----------|--------|
+| letsencrypt | /etc/letsencrypt/ |
+| nginx | /etc/letsencrypt/ /etc/ssl/ /assets/ |
+| webpack | /assets/ |
+| uwsgi | - |
+| redis | - |
 
 ### Networking
 
-Container | Network | Exposed Bridged ports
--------------------------------------------
-letsencrypt |  | 80 443
-nginx | blog | 80 443
-webpack |  | 
-uwsgi | blog | 
-redis | blog | 
+| Container | Network | Exposed Bridged ports |
+| -------- | ------------ | ------------------- |
+| letsencrypt |  | 80 443 |
+| nginx | blog | 80 443 |
+| webpack |  | |
+| uwsgi | blog | |
+| redis | blog | |
 
 
 * Letsencrypt certificate renewal
