@@ -36,26 +36,6 @@ openssl dhparam -out /etc/ssl/certs/dhparam.pem
 * Letsencrypt certificate renewal
 ``` shell
 docker run -ti -p 80:80 -p 443:443 -v /etc/letsencrypt/:/etc/letsencrypt letsencrypt
-
-* uwsgi
-``` shell
-docker run -tid --net blog --name uwsgi uwsgi
-```
-
-* webpack
-This needs at least 512M. Add swap if failing.
-
-``` shell
-docker run -ti --volumes-from nginx --name webpack webpack
-```
-
-* NGINX production
-``` shell
-docker run -tid -p 80:80 -p 443:443 -v /etc/letsencrypt/:/etc/letsencrypt -v /etc/ssl/:/etc/ssl/ --net=blog --name=nginx nginx nginx -g "daemon off;"
-```
-* NGINX development
-``` shell
-sudo docker run --rm -tid -p 80:80 -p 443:443 --net=blog --name=nginx -v /etc/self-cert/live/:/etc/letsencrypt/live/ -v /etc/self-cert/:/etc/self-cert/ -v /etc/ssl/:/etc/ssl nginx nginx -g "daemon off;"
 ```
 
 ### Not included in this repo:
