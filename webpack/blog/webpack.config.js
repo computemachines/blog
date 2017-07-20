@@ -5,9 +5,9 @@ module.exports = () => {
     context: resolve('src'),
     entry: './scripts/program.js',
     output: {
-      path: resolve("/assets"),
+      path: resolve("/assets"), // should be ./assets in dev
       //resolve(__dirname, './computemachines/static/'),
-      publicPath: "/static/",
+      publicPath: "/assets/",
       filename: 'bundle.js'
     },
     module: {

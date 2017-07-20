@@ -3,8 +3,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "Hello worlds"
+    return redirect(url_for("show_projects"))
 
-@app.route('/hello/<name>')
-def hello(name="Stranger"):
-    return render_template('hello.html', name=name)
+@app.route('/projects')
+def show_projects():
+    return render_template("projects/elasticity.html")
