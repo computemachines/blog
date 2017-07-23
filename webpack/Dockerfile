@@ -17,9 +17,11 @@ RUN cd /webpack/blog/; \
     npm install snapsvg && \
     npm install style-loader && \
     npm install webpack && \
-    npm install webpack-dev-server
+    npm install webpack-dev-server && \
+    npm install delaunay-fast
 
     
+
 VOLUME /assets
 
 CMD cd /webpack/blog; npm run build

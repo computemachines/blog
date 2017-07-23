@@ -8,3 +8,7 @@ def index():
 @app.route('/projects')
 def show_projects():
     return render_template("projects/elasticity.html")
+
+@app.context_processor
+def inject_debug():
+    return dict(debug=app.debug)
