@@ -1,11 +1,19 @@
 {% extends "layout.html" %}
 {% block title %}Linear Elasticity{% endblock %}
+
 {% block body %}
-<h1>Linear Elasticity in JS using Finite Elements</h1>
+<h1>QuadEdge Data Structure</h1>
 <svg id="triangulated" height="300" width="300"
      xmlns="http://www.w3.org/2000/svg">
+  <marker id="triangle"
+      viewBox="0 0 10 10" refX="0" refY="5" 
+      markerUnits="strokeWidth"
+      markerWidth="4" markerHeight="3"
+      orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" />
+  </marker>
 </svg>
-<p>Body text. $$ f_i = \langle f, \phi_i \rangle = \int_0^1 f \phi_i \ dx $$ Here is more text.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed consectetur enim. Pellentesque tellus nunc, iaculis et nunc vel, fermentum tincidunt nulla. Suspendisse justo sem, tincidunt nec nunc tristique, commodo mattis leo. Nunc mattis tortor faucibus pellentesque finibus. Suspendisse lacus augue, varius eget iaculis non, faucibus tempus felis. Ut blandit pellentesque urna, non tristique ex accumsan id. Fusce ut diam nec nisl convallis faucibus vel vitae tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis, urna a feugiat commodo, neque eros hendrerit metus, sed gravida est enim vitae quam. Maecenas quis pellentesque felis. Aenean vel sem sit amet ex tristique posuere.</p>
 {% if debug %}
 <script type="text/javascript"
 	src="http://localhost:8080/assets/bundle.js">

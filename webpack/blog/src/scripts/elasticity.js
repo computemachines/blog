@@ -1,40 +1,61 @@
-import $ from 'jquery'
-import _ from 'lodash'
+import $ from 'jquery';
+import _ from 'lodash';
 
-import Delaunay from 'delaunay-fast'
-window.Delaunay = Delaunay
-
+import {makeEdge, connect, deleteEdge, swap} from '@computemachines/subdivision';
 
 const Snap = require(`imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js`);
 
-function circle_verts(radius, center=[0, 0], darc=10) {
-  let verts = []
-  let num_verts = Math.round(2*Math.PI*radius/darc)
-  for (let i of _.range(num_verts)) {
-    let angle = i*2*Math.PI/num_verts
-    verts.push([
-      radius*Math.cos(angle) + center[0],
-      radius*Math.sin(angle) + center[1]
-    ])
-  }
-  return verts
-}
+
+const forwardTransform =
+      p => [p[0]*100 + 150, p[1]*100 + 150];
+const backwardTransform =
+      p => [(p[0] - 150)/100, (p[1] - 150)/100];
+
+const points = [
+  [-0.50, 0.5],
+  [0.75, 0.5],
+  [0.50, -0.5],
+  [-0.75, -0.5]
+].map(forwardTransform);
+
+const edges = [
+  makeEdge(points[0], points[3]),
+  makeEdge(points[1], points[2]).sym(),
+];
+edges.push(connect(edges[0], edges[1]));
+edges.push(connect(edges[1], edges[0]));
+edges.push(connect(edges[0], edges[3]));
+swap(edges[4]);
+
 
 function draw_verts(snap, verts) {
   for (let [x, y] of verts) {
-    snap.circle(x, y, 5).attr({fill: "black", strokeWidth: 0})
+    snap.circle(x, y, 5).attr({fill: "black", strokeWidth: 0});
+  }
+}
+
+function average(a, b) {
+  return [(a[0]+b[0])/2, (a[1]+b[1])/2];
+}
+
+// [a, b, c, d] => edge(a to b) + edge(c to d)
+function draw_edges(snap, edges) {
+  for (let edge of edges) {
+    let line = snap.polyline(...edge.org(),
+			     ...average(edge.org(), edge.dest()),
+			     ...edge.dest());
+    line.attr({
+      stroke: 'black',
+      strokeWidth: 3
+    });
+    $('polyline').attr("marker-mid", "url(#triangle)");
   }
 }
 
 function init_visual() {
-  let s1 = Snap('#triangulated')
-
-  let lineattr = {
-    fill: "white",
-    stroke: "black",
-    strokeWidth: 1
-  }
-  
+  let s1 = Snap('#triangulated');
+  draw_verts(s1, points);
+  draw_edges(s1, edges);
   // s1.polygon(
   //   verts
   // ).attr({
@@ -45,24 +66,17 @@ function init_visual() {
   // for (let [x, y] of verts) {
   //   s1.line(150, 150, x, y).attr(lineattr)
   // }
-  s1.circle(150, 150, 5).attr(lineattr)
 
-  let verts = _.flatMap(
-    _.range(100, 50, -10),
-    r => circle_verts(r, [150, 150], 10)
-  )
-  let edgeIndicies = Delaunay.triangulate(verts)
-
-  for (let [i, j, k] of _.chunk(edgeIndicies, 3)) {
-    s1.polygon(...verts[i], ...verts[j], ...verts[k]).attr(lineattr)
-  }
+  // let verts = _.flatMap(
+  //   _.range(100, 50, -10),
+  //   r => circle_verts(r, [150, 150], 10)
+  // );
   
-  console.log(edgeIndicies.length, verts.length)
   //draw_verts(s1, verts)
 }
 
 function register() {
-  init_visual()
+  init_visual();
 }
 
 export {register}

@@ -1,10 +1,8 @@
-import {register} from './elasticity'
+import {register} from './elasticity';
 
-import {QuadEdge, DEdge} from './quadedge'
+import {QuadEdge, DEdge} from './quadedge';
 
-let edge = QuadEdge.build()
-console.log(edge[0].rot().rot())
+import '../style/critical.scss';
+import '../style/style.scss';
 
-// import '../style/style.css';
-
-register()
+register();

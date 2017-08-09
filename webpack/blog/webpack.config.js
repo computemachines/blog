@@ -1,33 +1,66 @@
 const {resolve} = require('path');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const cssFromSassLoaders = [
+  {
+    loader: 'css-loader',
+    options: {sourceMap: true}
+  },
+  {
+    loader: "postcss-loader",
+    options: {
+      plugins: [require("autoprefixer")],
+      sourceMap: true
+    }
+  },
+  {
+    loader: "sass-loader", options: {
+      sourceMap: true,
+      includePaths: [
+	resolve('./node_modules/bootstrap/scss')
+      ]
+    }
+  }];
 
 module.exports = () => {
   return {
     context: resolve('src'),
-    entry: './scripts/program.js',
+    entry: ['./scripts/program.js', './style/critical.scss'],
     output: {
-      path: resolve("/assets"), // should be ./assets in dev
-      //resolve(__dirname, './computemachines/static/'),
+      path: resolve("./assets"), // should be ./assets in dev
       publicPath: "/assets/",
       filename: 'bundle.js'
     },
     module: {
-      rules: [{
-	test: /\.js$/,
-	use: {
-	  loader: 'babel-loader',
-	  options: {
-	    presets: ['es2015']
-	  }
+      rules: [
+	{
+	  test: /\.js$/,
+	  use: {
+	    loader: 'babel-loader',
+	    options: {
+	      presets: ['es2015']
+	    }
+	  },
+	  exclude: /node_modules/
 	},
-	exclude: /node_modules/
-      }, {
-	test: /\.css$/,
-	use: ['style-loader', 'css-loader']
-      }, {
-	test: /\.(png|svg|jpg|gif)$/,
-	use: ['file-loader'] //?name=/static/[hash].[ext]']
-      }]
+	{
+	  test: /critical.scss$/,
+	  use: ExtractTextPlugin.extract({
+	    fallback: 'style-loader',
+	    use: cssFromSassLoaders
+	  })
+	},
+	{
+	  test: /\.scss$/,
+	  exclude: /critical.scss$/,
+	  use: ['style-loader', ...cssFromSassLoaders]
+	},
+	{
+	  test: /\.(png|svg|jpg|gif)$/,
+	  use: ['file-loader'] 
+	}]
     },
-    devtool: "eval" // TODO: necessary for production?
+    devtool: "eval",
+    plugins: [new ExtractTextPlugin("critical.css")]
   };
 };
