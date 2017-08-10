@@ -3,8 +3,11 @@
   <head>
     {% block head %}
     <style rel="text/css">
-      {% block critical_styles %}
-      {% endblock %}
+      {% if debug %}
+      {{ get_resource_as_string('../../webpack/blog/assets/critical.css') }}
+      {% else %}
+      {{ get_resource_as_string('/assets/critical.css') }}
+      {% endif %}
     </style>
     <!-- <link rel="stylesheet" type="text/css" href="http://localhost:8080/assets/critical.css" /> -->
 
