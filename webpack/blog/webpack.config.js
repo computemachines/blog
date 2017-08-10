@@ -27,7 +27,7 @@ module.exports = () => {
     context: resolve('src'),
     entry: ['./scripts/program.js', './style/critical.scss'],
     output: {
-      path: resolve("./assets"), // should be ./assets in dev
+      path: resolve("/assets"), // should be ./assets in dev
       publicPath: "/assets/",
       filename: 'bundle.js'
     },
