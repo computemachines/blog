@@ -16,7 +16,7 @@ RUN cd /webpack/blog/; \
     npm install chai && \
     npm install css-loader && \
     npm install exports-loader && \
-    npm install extract-text-webpack-plugin && \
+    npm install extract-text-webpack-plugin@2.1.2 && \
     npm install file-loader && \
     npm install imports-loader && \
     npm install jquery && \
